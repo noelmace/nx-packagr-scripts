@@ -3,7 +3,7 @@
 const program = require('commander')
 const build = require('./src/build.js')
 const publish = require('./src/publish.js')
-const { join } = require('path')
+const { join, basename, dirname } = require('path')
 
 program
     .version(require(join(__dirname, 'package.json')).version)

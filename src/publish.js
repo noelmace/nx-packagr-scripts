@@ -1,3 +1,9 @@
+const { basename, dirname, join } = require('path');
+const { libName, conditionnalGetLibs } = require('./libs.js')
+const { paths } = require('./constants.js')
+const { fs: { access } } = require('./promisified.js')
+const { spawn } = require('./exec.js')
+
 /**
  * publish all previously buildt libraries
  * @see build.js
@@ -8,12 +14,12 @@ async function publish(cwd, program) {
 
   const promises = packages.map(async pkg => {
     const prefix = basename(dirname(pkg))
-    const cwd = join(cwd, paths.libDist, prefix)
+    const folder = join(cwd, paths.libDist, prefix)
     let rslt = dirname(pkg)
-    await access(cwd)
+    await access(folder)
     program.dryRun
-      ? console.log(`[Dry-run] npm publish from ${cwd} directory - nothing to do`)
-      : rslt = await spawn('npm', ['publish'], { prefix: !!(packages.length-1) && prefix }, { cwd })
+      ? console.log(`[Dry-run] npm publish from ${folder} directory - nothing to do`)
+      : rslt = await spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['publish'], { prefix: !!(packages.length-1) && prefix }, { cwd: folder })
     return rslt
   })
 

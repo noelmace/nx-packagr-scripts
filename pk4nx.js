@@ -8,17 +8,19 @@ const { join } = require('path')
 program
     .version(require(join(__dirname, 'package.json')).version)
     .description(
-        'Build and publish libraries in libs/ with a package.json file in Angular Package Format'
-        + 'see @nrwl/schematics for more informations on Nx schematics'
-    ).option('-l, --lib [lib]', 'define a unique lib folder to build', false)
+        'ng-packagr CLI for Nrwl/Nx projects'
+    ).option('-l, --lib [lib]', 'define a unique lib folder to build or publish', false)
     .option('-d, --debug', 'debug mode', false)
-    .option('-p, --path', 'project\'s root folder (. by default)')
+    .option('-p, --path [path]', 'Nx project\'s root folder (. by default)')
+    .option('-f, --force', 'return 0 even if an error occured', false)
+    .option('-k, --keep', 'keep previously built npm-libs', false)
+    .option('--npmrc [npmrc]', '[build] path to an .npmrc publish configuration to had in the lib build folder', false)
+    .option('-n, --dry-run', '[publish] do everything except actually publish the packages', false)
+
 
 const cwd = program.path || process.cwd()
 
 program.command('build')
-    .option('-f, --force', 'return 0 even if an error occured', false)
-    .option('-k, --keep', 'keep previously built npm-libs', false)
     .description('build libraries')
     .action(async () => {
         try {
@@ -38,7 +40,6 @@ program.command('build')
 
 program.command('publish')
     .description('publish prebuilt libraries')
-    .option('-n, --dry-run', 'do everything except actually publish the packages', false)
     .action(async () => {
         try {
             const rslt = await publish(cwd, program)

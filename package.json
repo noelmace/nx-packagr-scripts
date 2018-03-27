@@ -1,7 +1,7 @@
 {
-  "name": "nx-packagr",
+  "name": "packagr-for-nx",
   "version": "0.1.0",
-  "description": "simple scripts to build and publish libs in a nrwl/nx monorepo with ng-packagr",
+  "description": "ng-packagr CLI for nrwl/nx projects",
   "main": "cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,6 +33,6 @@
   },
   "homepage": "https://github.com/noelmace/nx-packagr#readme",
   "bin": {
-    "nx-packagr": "./cli.js"
+    "pk4nx": "./pk4nx.js"
   }
 }

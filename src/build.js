@@ -23,8 +23,9 @@ async function build(cwd, program) {
     // we use [dherges/ng-packgr](https://github.com/dherges/ng-packagr) to build the library
     // we should switch to @angular-devkit/build-ng-packagr when available
     await spawnNodeBin(join(cwd, 'node_modules', 'ng-packagr', 'cli', 'main.js'), ['-p', pkg], { prefix: !!(packages.length-1) && basename(dirname(pkg)) })
-    // TODO : optional npmrc file
-    // await copy(join(cwd, paths.npmRc), join(cwd, paths.libDist, basename(dirname(pkg)), '.npmrc'))
+    if(program.npmrc) {
+      await copy(program.npmrc, join(cwd, paths.libDist, basename(dirname(pkg)), '.npmrc'))
+    }
     return pkg
   })
 

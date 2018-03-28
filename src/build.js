@@ -1,10 +1,10 @@
 const { basename, dirname, join } = require('path');
-const { spawnNodeBin } = require('./utils/exec.js');
 const { paths } = require('./constants.js');
 const { copy } = require('fs-extra');
 const { cleanBuilds } = require('./steps/clean');
 const { getPkgJsons } = require('./steps/pkgjsons');
 const { ensureConventions } = require('./steps/conventions');
+const { ngPackagr } = require('ng-packagr');
 
 /**
  * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview
@@ -23,10 +23,10 @@ async function build(cwd, program) {
 
     // we use [dherges/ng-packgr](https://github.com/dherges/ng-packagr) to build the library
     // we should switch to @angular-devkit/build-ng-packagr when available
-    await spawnNodeBin(join(cwd, 'node_modules', 'ng-packagr', 'cli', 'main.js'), ['-p', pkg], {
-      prefix: !!(packages.length - 1) && basename(dirname(pkg))
-    });
-
+    await ngPackagr()
+      .forProject(pkg)
+      .withTsConfig(join(cwd, 'tsconfig.json'))
+      .build();
     if (program.npmrc) {
       await copy(program.npmrc, join(cwd, paths.libDist, basename(dirname(pkg)), '.npmrc'));
     }

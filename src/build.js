@@ -1,8 +1,10 @@
 const {basename, dirname, join} = require('path')
 const {spawnNodeBin} = require('./utils/exec.js');
 const {paths} = require('./constants.js')
-const {removeLibDist, ensureConventions, conditionnalGetLibs} = require('./libs.js')
 const {copy} = require('fs-extra')
+const {cleanBuilds} = require('./steps/clean')
+const {getPkgJsons} = require('./steps/pkgjsons')
+const {ensureConventions} = require('./steps/conventions')
 
 /**
  * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview
@@ -11,10 +13,10 @@ const {copy} = require('fs-extra')
  */
 async function build(cwd, program) {
   if (!program.keep) {
-    removeLibDist(cwd)
+    cleanBuilds(cwd)
   }
 
-  let packages = await conditionnalGetLibs(program.lib, cwd)
+  let packages = await getPkgJsons(program.lib, cwd)
 
   const promises = packages.map(async (pkg) => {
     await ensureConventions(pkg, cwd, program.debug);

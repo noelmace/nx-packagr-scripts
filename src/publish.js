@@ -1,8 +1,8 @@
 const {basename, dirname, join} = require('path');
-const {conditionnalGetLibs} = require('./libs.js')
 const {paths} = require('./constants.js')
 const {fs: {access}} = require('./utils/promisified.js')
 const {spawn} = require('./utils/exec.js')
+const {getPkgJsons} = require('./steps/pkgjsons')
 
 /**
  * publish all previously buildt libraries
@@ -11,7 +11,7 @@ const {spawn} = require('./utils/exec.js')
  * @see build.js
  */
 async function publish(cwd, program) {
-  let packages = await conditionnalGetLibs(program.lib, cwd)
+  let packages = await getPkgJsons(program.lib, cwd)
 
   const promises = packages.map(async pkg => {
   const prefix = basename(dirname(pkg))

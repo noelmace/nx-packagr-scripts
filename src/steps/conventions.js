@@ -20,6 +20,15 @@ function devDependencies({packageJson, errorMessage}) {
 
 // each lib's dependency should be satisfied by a global dependency
 function satisfiedDependencies({packageJson, errorMessage, cwd, debug}) {
+  const error = new Error(errorMessage(`Every dependency should be consistent with the root package.json.`))
+  const angularCliConfig = require(join(cwd, '.angular-cli.json'))
+  const scope = '@' + angularCliConfig.project.npmScope + '/'
+
+  // TODO : filter by tags
+  const libs = angularCliConfig.apps
+                                   .filter(appConfig => appConfig.root.startsWith('libs/'))
+                                   .map(appConfig => scope + appConfig.name)
+
   const getDependencies = (pkg) => ({
     ...pkg.dependencies,
     ...pkg.peerDependencies,
@@ -27,26 +36,28 @@ function satisfiedDependencies({packageJson, errorMessage, cwd, debug}) {
   })
 
   const rootDependencies = getDependencies(require(join(cwd, 'package.json')))
-  const dependencies = Object.entries(getDependencies(packageJson))
+  const libDependencies = Object.entries(getDependencies(packageJson))
+
   let isVersionOk = true;
   if (debug) {
     console.log(`debug dependencies:`)
     console.log(`\t${'dependency'.padEnd(30)}root\tproject`)
-    dependencies.forEach(([dependency, version]) => {
-      const rootVersion = rootDependencies[dependency];
-      const test = semver.satisfies(rootVersion, version)
-      isVersionOk = isVersionOk && test;
-      if (!test) {
-        console.log(`\t${dependency.padEnd(30)}${rootVersion || 'none'}\t${version}`)
-      }
-    })
-    console.log()
-  } else {
-    isVersionOk = dependencies.every(([dependency, version]) => {return semver.satisfies(rootDependencies[dependency], version)})
   }
+  libDependencies.forEach(([libDependency, version]) => {
+    const rootVersion = rootDependencies[libDependency];
+    const test = libs.includes(libDependency) || semver.satisfies(rootVersion, version)
+    isVersionOk = isVersionOk && test;
+    if (!test) {
+      console.log(`\t${libDependency.padEnd(30)}${rootVersion || 'none'}\t${version}`)
+    }
+    if (!debug && !isVersionOk) {
+      throw error
+    }
+  })
+  console.log()
 
   if (!isVersionOk) {
-    throw new Error(errorMessage(`Every dependency should be consistent with the root package.json.`))
+    throw error
   }
 }
 

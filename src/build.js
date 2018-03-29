@@ -1,6 +1,6 @@
 const { basename, dirname, join } = require('path')
-const { spawnNodeBin } = require('./exec.js');
-const { glob } = require('./promisified.js')
+const { spawnNodeBin } = require('./utils/exec.js');
+const { glob } = require('./utils/promisified.js')
 const { appVersion, paths } = require('./constants.js')
 const { removeLibDist, ensureConventions, conditionnalGetLibs } = require('./libs.js')
 const { copy } = require('fs-extra')

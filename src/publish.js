@@ -1,8 +1,8 @@
 const { basename, dirname, join } = require('path');
 const { libName, conditionnalGetLibs } = require('./libs.js')
 const { paths } = require('./constants.js')
-const { fs: { access } } = require('./promisified.js')
-const { spawn } = require('./exec.js')
+const { fs: { access } } = require('./utils/promisified.js')
+const { spawn } = require('./utils/exec.js')
 
 /**
  * publish all previously buildt libraries

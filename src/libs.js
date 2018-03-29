@@ -1,5 +1,5 @@
 const { paths, libDestFolder } = require('./constants.js')
-const { glob, fs: { access } } = require('./promisified.js')
+const { glob, fs: { access } } = require('./utils/promisified.js')
 const { remove } = require('fs-extra')
 const { dirname, basename, join } = require('path')
 const semver = require('semver')

@@ -1,4 +1,3 @@
-const { resolveBin } = require('./promisified.js');
 const childProcess = require('child_process');
 const prepend = require('./prepend.js')
 
@@ -15,16 +14,15 @@ const prepend = require('./prepend.js')
  * @param {boolean} options.silent Whether to output to STDERR and STDOUT.
  * @param {string} options.errMessage If an error happens, this will replace the standard error.
  * @param {string} options.prefix prefix to add to stderr and stdout
- * @param {boolean} options.debug show debug logs
  * @param {Object} spawnOptions {@link https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options|spawn 'options' argument}
  * @returns {Promise} resolve on child_process.spawn 'close' event
  */
-async function spawn(binPath, args, { silent, prefix, errMessage, debug }, spawnOptions = {}) {
+async function spawn(binPath, args, {silent, prefix, errMessage}, spawnOptions = {}) {
   const spawned = childProcess.spawn(binPath, args, spawnOptions);
 
   // redirect the child process output
   if (!silent) {
-    let { stdout, stderr } = spawned
+    let {stdout, stderr} = spawned
 
     if (prefix) {
       [stdout, stderr] = [stdout, stderr].map(stream => stream.pipe(prepend(prefix)))
@@ -56,11 +54,6 @@ async function spawn(binPath, args, { silent, prefix, errMessage, debug }, spawn
  * @param {Object} options @see spawn
  */
 async function spawnNodeBin(binPath, args = [], options = {}, nodeArgs = [], spawnOptions = {}) {
-  if (args.length === 0) {
-    args = executable;
-    executable = undefined;
-  }
-
   // Execute the node binary within a new child process using spawn.
   // The binary needs to be `node` because on Windows the shell cannot determine the correct
   // interpreter from the shebang.

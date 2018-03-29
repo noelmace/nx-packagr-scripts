@@ -1,4 +1,4 @@
-const { Transform } = require('stream')
+const {Transform} = require('stream')
 
 /**
  * take a node stream and add a prefix  to each line
@@ -9,9 +9,7 @@ module.exports = function prepend(prefixStr) {
   const prefix = Buffer.from(`[${prefixStr}]: `);
 
   function transform(chunk, encoding, done) {
-    this._rest = this._rest && this._rest.length
-      ? Buffer.concat([this._rest, chunk])
-      : chunk
+    this._rest = this._rest && this._rest.length ? Buffer.concat([this._rest, chunk]) : chunk
 
     let index
 
@@ -19,11 +17,13 @@ module.exports = function prepend(prefixStr) {
     // readable side of the transform stream
     while ((index = this._rest.indexOf('\n')) !== -1) {
       // The `end` parameter is non-inclusive, so increase it to include the newline we found
-      const line = this._rest.slice(0, ++index)
-      // `start` is inclusive, but we are already one char ahead of the newline -> all good
-      this._rest = this._rest.slice(index)
-      // We have a single line here! Prepend the string we want
-      this.push(Buffer.concat([prefix, line]))
+      const line = this._rest
+                       .slice(0, ++index)
+                   // `start` is inclusive, but we are already one char ahead of the newline -> all good
+                   this._rest = this._rest
+                                    .slice(index)
+                                // We have a single line here! Prepend the string we want
+                                this.push(Buffer.concat([prefix, line]))
     }
 
     return void done()

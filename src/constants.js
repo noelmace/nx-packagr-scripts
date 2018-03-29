@@ -1,6 +1,4 @@
 /// Global constants
-const { readFileSync } = require('fs')
-
 module.exports = {
   // used as a constant for conventions (this is ways it's not in 'paths')
   libDestFolder: '../../dist/npm-libs',

@@ -23,6 +23,7 @@ async function removeLibDist(cwd) {
 /**
  * Ensure that our conventions on npm libraries are respected
  * @param {string} pkg path to the library's package.json file
+ * @param {string} cwd working directory
  * @param {boolean} [debug=false] complete information on error reasons (slower solution)
  */
 async function ensureConventions(pkg, cwd, debug = false) {
@@ -81,6 +82,7 @@ ${libName} build process has been aborted.`
 
 /**
  * get all npm libraries package.json paths
+ * @param {string} cwd working directory
  * @returns {Promise<string>[]}
  */
 async function getLibsPkgPaths(cwd) {
@@ -105,6 +107,7 @@ async function getLibsPkgPaths(cwd) {
 /**
  * wrap getLibsPkgPaths to permit to use a parameter to manually set a single library folder path
  * @param {string} lib path to the single library from whish you need a package.json file
+ * @param {string} cwd working directory
  * @returns {Promise<string>[]} package.json path(s) (just from getLibsPkgPaths if lib isn't set)
  */
 async function conditionnalGetLibs(lib, cwd) {

@@ -6,6 +6,8 @@ const { spawn } = require('./exec.js')
 
 /**
  * publish all previously buildt libraries
+ * @param {string} cwd working directory
+ * @param {string} program parsed CLI arguments (@see commander)
  * @see build.js
  */
 async function publish(cwd, program) {

@@ -9,6 +9,8 @@ const { exit } = process;
 
 /**
  * @see https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview
+ * @param {string} cwd working directory
+ * @param {string} program parsed CLI arguments (@see commander)
  */
 async function build(cwd, program) {
   if(!program.keep) {

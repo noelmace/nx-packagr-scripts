@@ -8,7 +8,7 @@ const {libDestFolder} = require('../constants.js')
  * @param {string} cwd working directory
  * @param {boolean} [debug=false] complete information on error reasons (slower solution)
  */
-async function ensureConventions(pkg, cwd, debug = false) {
+function ensureConventions(pkg, cwd, debug = false) {
   const libName = basename(dirname(pkg))
   const errorMessage = (msg) => `${pkg} does not follow the conventions.
 ${msg}

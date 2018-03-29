@@ -17,10 +17,12 @@ const dependencies = new Map([
 dependencies.forEach((functions, mod) => {
   const dependency = require(mod)
 
-  let toExport
+  let toExport = {}
 
   if (functions) {
-    functions.forEach(fct => {toExport[fct] = Util.promisify(dependency[fct])})
+    functions.forEach(fct => {
+      toExport[fct] = Util.promisify(dependency[fct])
+    })
   } else {
     toExport = Util.promisify(dependency)
   }

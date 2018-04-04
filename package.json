@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint ./**/*.js",
     "pretty": "eslint --fix ./**/*.js && prettier --write ./**/*.{json,css,md}",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "version": "standard-changelog && git add CHANGELOG.md"
   },
   "lint-staged": {
     "*.{json,css,md}": ["prettier --write", "git add"],
@@ -39,6 +40,7 @@
     "lint-staged": "^7.0.3",
     "ng-packagr": "^2.2.0",
     "prettier": "1.11.1",
+    "standard-changelog": "^1.0.18",
     "tsickle": "^0.25.5",
     "typescript": "^2.4.2"
   },

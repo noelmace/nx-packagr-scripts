@@ -1,6 +1,10 @@
 # packagr-for-nx (pk4nx)
 
-ng-packagr CLI for nrwl/nx projects
+> ng-packagr CLI for nrwl/nx projectss
+
+[![npm version](https://badge.fury.io/js/packagr-for-nx.svg)](https://badge.fury.io/js/packagr-for-nx)
+[![GitHub license](https://img.shields.io/github/license/noelmace/packagr-for-nx.svg)](https://github.com/noelmace/packagr-for-nx/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/noelmace/packagr-for-nx.svg?branch=master)](https://travis-ci.org/noelmace/packagr-for-nx)
 
 ## Objective
 
@@ -10,11 +14,15 @@ For more informations, see the following issues :
 
 * [Nrwl/nx : Add ability to publish multiple libraries from a single nx workspace](https://github.com/nrwl/nx/issues/225)
 
-## Usage
+## Install
+
+[![NPM](https://nodei.co/npm/packagr-for-nx.png)](https://npmjs.org/package/packagr-for-nx)
 
 `npm install --dev packagr-for-nx`
 
-Then, run `pk4nx --help` to output the usage informations.
+## Usage
+
+Run `pk4nx --help` to output the usage informations.
 
     Usage: pk4nx [options] [command]
 

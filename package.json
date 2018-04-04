@@ -1,6 +1,6 @@
 {
   "name": "packagr-for-nx",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "ng-packagr CLI for nrwl/nx projects",
   "main": "cli.js",
   "scripts": {

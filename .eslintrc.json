@@ -1,22 +1,14 @@
 {
+  "extends": ["eslint:recommended", "plugin:node/recommended", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "ecmaFeatures": {
       "experimentalObjectRestSpread": false
     }
   },
-  "plugins": [
-    "node"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:node/recommended"
-  ],
+  "plugins": ["node"],
   "rules": {
-    "node/exports-style": [
-      "error",
-      "module.exports"
-    ],
+    "node/exports-style": ["error", "module.exports"],
     "no-console": "off"
   }
 }

@@ -4,7 +4,13 @@
   "description": "ng-packagr CLI for nrwl/nx projects",
   "main": "cli.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint pk4nx.js \"src/**/*.js\""
+    "lint": "eslint ./**/*.js",
+    "pretty": "eslint --fix ./**/*.js && prettier --write ./**/*.{json,css,md}",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{json,css,md}": ["prettier --write", "git add"],
+    "*.js": ["eslint --fix", "git add"]
   },
   "repository": {
     "type": "git",
@@ -22,18 +28,24 @@
     "ng-packagr": "^2.2.0"
   },
   "devDependencies": {
+    "@angular/compiler": "^5.0.0",
+    "@angular/compiler-cli": "^5.0.0",
+    "@nrwl/schematics": "^0.9.0",
     "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-node": "^6.0.1",
-    "prettier": "1.11.1"
+    "eslint-plugin-prettier": "^2.6.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.3",
+    "ng-packagr": "^2.2.0",
+    "prettier": "1.11.1",
+    "tsickle": "^0.25.5",
+    "typescript": "^2.4.2"
   },
   "engines": {
     "node": ">=8.7.0"
   },
-  "keywords": [
-    "nrwl",
-    "angular",
-    "nx"
-  ],
+  "keywords": ["nrwl", "angular", "nx"],
   "author": "Noël Macé",
   "license": "MIT",
   "bugs": {

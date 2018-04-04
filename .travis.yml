@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '8.7'
+script:
+  - npm run lint
+notifications:
+  email: false
+  webhooks:
+    on_success: true
+    on_failure: true
+    on_start: true

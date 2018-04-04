@@ -7,6 +7,6 @@ module.exports = {
     // by convention, we never add a final / to the paths
     libDist: 'dist/npm-libs',
     libs: 'libs',
-    npmRc: 'scripts/assets/.npmrc',
-  },
-}
+    npmRc: 'scripts/assets/.npmrc'
+  }
+};

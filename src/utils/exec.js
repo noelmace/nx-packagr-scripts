@@ -1,5 +1,5 @@
 const childProcess = require('child_process');
-const prepend = require('./prepend.js')
+const prepend = require('./prepend.js');
 
 /**
  * execute a binary as if from the command line
@@ -17,34 +17,34 @@ const prepend = require('./prepend.js')
  * @param {Object} spawnOptions {@link https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options|spawn 'options' argument}
  * @returns {Promise} resolve on child_process.spawn 'close' event
  */
-async function spawn(binPath, args, {silent, prefix, errMessage}, spawnOptions = {}) {
+async function spawn(binPath, args, { silent, prefix, errMessage }, spawnOptions = {}) {
   const spawned = childProcess.spawn(binPath, args, spawnOptions);
 
   // redirect the child process output
   if (!silent) {
-    let {stdout, stderr} = spawned
+    let { stdout, stderr } = spawned;
 
     if (prefix) {
-      [stdout, stderr] = [stdout, stderr].map(stream => stream.pipe(prepend(prefix)))
+      [stdout, stderr] = [stdout, stderr].map(stream => stream.pipe(prepend(prefix)));
     }
 
-    stdout.pipe(process.stdout)
-    stderr.pipe(process.stdout)
+    stdout.pipe(process.stdout);
+    stderr.pipe(process.stdout);
   }
 
   return new Promise((fulfill, reject) => {
-    spawned.on('close', (code) => {
+    spawned.on('close', code => {
       if (code != 0) {
         if (errMessage === undefined) {
-          reject(new Error('Process failed with code ' + code))
+          reject(new Error('Process failed with code ' + code));
         } else {
-          reject(new Error(errMessage))
+          reject(new Error(errMessage));
         }
       } else {
-        fulfill()
+        fulfill();
       }
     });
-  })
+  });
 }
 
 /**
@@ -66,4 +66,4 @@ async function spawnNodeBin(binPath, args = [], options = {}, nodeArgs = [], spa
 module.exports = {
   spawn,
   spawnNodeBin
-}
+};

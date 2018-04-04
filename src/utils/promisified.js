@@ -2,8 +2,8 @@
 /// version that returns promises using Node 8 LTS Util.promisify :
 /// https://nodejs.org/docs/latest-v8.x/api/util.html
 
-const Util = require('util')
-const {toCamelCase} = require('./strings.js')
+const Util = require('util');
+const { toCamelCase } = require('./strings.js');
 
 // all the dependencies to exports when promisified
 const dependencies = new Map([
@@ -11,21 +11,21 @@ const dependencies = new Map([
   ['glob', false],
   ['resolve-bin', false],
   // dependencies with multiple functions to promisify
-  ['fs', ['access']],
-])
+  ['fs', ['access']]
+]);
 
 dependencies.forEach((functions, mod) => {
-  const dependency = require(mod)
+  const dependency = require(mod);
 
-  let toExport = {}
+  let toExport = {};
 
   if (functions) {
     functions.forEach(fct => {
-      toExport[fct] = Util.promisify(dependency[fct])
-    })
+      toExport[fct] = Util.promisify(dependency[fct]);
+    });
   } else {
-    toExport = Util.promisify(dependency)
+    toExport = Util.promisify(dependency);
   }
 
-  module.exports[toCamelCase(mod)] = toExport
-})
+  module.exports[toCamelCase(mod)] = toExport;
+});

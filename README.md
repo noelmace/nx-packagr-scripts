@@ -4,16 +4,17 @@ ng-packagr CLI for nrwl/nx projects
 
 ## Objective
 
-*This tool is only intended to be temporary, given that this feature should be covered by nrwl/nx or another schematics.*
+_This tool is only intended to be temporary, given that this feature should be covered by nrwl/nx or another schematics._
 
 For more informations, see the following issues :
-*  [Nrwl/nx : Add ability to publish multiple libraries from a single nx workspace](https://github.com/nrwl/nx/issues/225)
+
+* [Nrwl/nx : Add ability to publish multiple libraries from a single nx workspace](https://github.com/nrwl/nx/issues/225)
 
 ## Usage
 
-``npm install --dev packagr-for-nx``
+`npm install --dev packagr-for-nx`
 
-Then, run ``pk4nx --help`` to output the usage informations.
+Then, run `pk4nx --help` to output the usage informations.
 
     Usage: pk4nx [options] [command]
 
@@ -39,6 +40,7 @@ Then, run ``pk4nx --help`` to output the usage informations.
 ## Conventions
 
 In addition with the ones followed by nrwl/nx, you need to respect the following conventions in your project :
+
 * each "npm library" should have a package.json file at his root, or it will be ignored
 * this file should define a ngPackage.dest property set to ../../dist/npm-libs/<lib-name>
 * each dependency specified in this file should be satisfied by one in the monorepository root package.json file

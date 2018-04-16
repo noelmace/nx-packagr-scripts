@@ -18,6 +18,8 @@ async function build(cwd, program) {
 
   let packages = await getPkgJsons(program.lib, cwd);
 
+  process.setMaxListeners(0);
+
   const promises = packages.map(async pkg => {
     ensureConventions(pkg, cwd, program.debug);
 
